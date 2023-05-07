@@ -22,6 +22,38 @@ $(document).ready(function () {
       users[usr.id] = `${usr.first_name} ${usr.last_name}`;
     }
   });
+   $.ajax({
+      url: 'http://0.0.0.0:5001/api/v1/places_search/',
+      type: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: JSON.stringify(amenityObj),
+      success: function (response) {
+        $('SECTION.places').empty();
+        for (const data of response) {
+          $('SECTION.places').append(
+            `<article>
+             <div class="title_box">
+             <h2>${data.name}</h2>
+             <div class="price_by_night">$ ${data.price_by_night}</div>
+             </div>
+             <div class="information">
+             <div class="max_guest">${data.max_guest} Guest(s)</div>
+             <div class="number_rooms">${data.number_rooms} Bedroom(s)</div>
+             <div class="number_bathrooms">${data.number_bathrooms} Bathroom(s)</div>
+             </div>
+             <div class="user">
+               <p><b>Owner: </b>${users[data.user_id]}</p>
+             </div>
+             <div class="description">${data.description}</div>
+             </article>`
+          );
+        }
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+
   $('button').click(function () {
     $('.places > article').remove();
     $.ajax({
