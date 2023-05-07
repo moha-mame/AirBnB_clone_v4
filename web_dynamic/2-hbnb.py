@@ -37,10 +37,11 @@ def hbnb():
 
     cache_id = str(uuid.uuid4())
 
-    return render_template('2-hbnb.html',
+   return render_template('2-hbnb.html',
                            states=st_ct,
                            amenities=amenities,
-                           places=places)
+                           places=places,
+                           cache_id=cache_id)
 
 
 if __name__ == "__main__":
